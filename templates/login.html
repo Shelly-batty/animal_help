@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录 - 流浪动物救助站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0 20px;
+            background: #f8f5f2;
+            position: relative;
+        }
+
+        .back-btn{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 30px;
+            color:black;
+            background: #8b4513;
+            display:flex;
+            text-decoration:none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 999;
+            border-radius: 6px; /* 圆角 */
+        }
+
+        /* 背景图 */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("{{ url_for('static', filename='/登录背景.png') }}");
+            background-size: cover;
+            background-position: center;
+            opacity: 1; 
+            z-index: -1;
+        }
+
+        /* 登录面板 */
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 50px 40px;
+            background: transparent; 
+            border: 1px solid rgba(255,255,255,0.4); 
+            box-shadow: none;
+            border-radius: 12px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            color: #8b4513;
+            font-size: 28px;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 44px;
+            padding: 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 46px;
+            background: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-btn:hover { background: #5d2d0c; }
+
+        .to-register {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+        .to-register a { color: #8b4513; }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('root') }}" class="back-btn">← 返回</a>
+
+    <div class="login-card">
+        <h2>流浪动物救助站 - 登录</h2>
+        <form action="login" method="post">
+            <div class="input-group">
+                <label>账号</label>
+                <input type="text" placeholder="请输入账号" name="username" required>
+            </div>
+            <div class="input-group">
+                <label>密码</label>
+                <input type="password" placeholder="请输入密码" name="password" required>
+            </div>
+            <div class="remember-row">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">记住我</label>
+            </div>
+            <button type="submit" class="login-btn">登录</button>
+            <div class="to-register">
+                还没有账号？<a href="/register">立即注册</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

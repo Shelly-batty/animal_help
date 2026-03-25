@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喂养指南</title>
+    <style>
+        .title{ 
+            text-align: center;
+        }
+        .guide{
+            border-bottom: 4px solid #8b4513;
+        }
+        .return{
+            position: fixed;
+            background-color: #8b4513;
+            text-decoration: none;
+            border:1px solid #8b4513;
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 6px; /* 圆角 */
+        }
+        .return:hover{
+            background-color: #5d2d0c;
+            border:1px solid #5d2d0c;
+        }
+        h1{
+            color:#8b4513;
+
+        }
+        h2{
+            margin-top: 20px;
+            color:#8b4513;
+        }
+        p{
+            font-size: medium;
+            color:#333;
+        }
+        .con{
+            display: flex;
+            justify-content: space-between;
+        
+        }
+        .con1{
+            width: 650px;
+            height: 800px;
+            margin:50px 60px;
+            background-color: #f8f5f2;
+            border-radius: 12px;
+        }
+        .con2{
+            width: 650px;
+            height: 800px;
+            background-color: #f8f5f2;
+            border-radius: 12px;
+        }
+        .con3{
+            width: 650px;
+            height: 800px;
+            margin:50px 60px;
+            background-color: #f8f5f2;
+            border-radius: 12px;
+        }
+        .con4{
+            width: 650px;
+            height: 800px;
+            background-color: #f8f5f2;
+            border-radius: 12px;
+        }
+        .con1:hover{
+            background-color: transparent;
+            box-shadow: 0 12px 48px rgb(0,0,0, 0.2);
+        }
+        .con2:hover{
+            background-color: transparent;
+            box-shadow: 0 12px 48px rgb(0,0,0, 0.2);
+        }
+        .con3:hover{
+            background-color: transparent;
+            box-shadow: 0 12px 48px rgb(0,0,0, 0.2);
+        }
+        .con4:hover{
+            background-color: transparent;
+            box-shadow: 0 12px 48px rgb(0,0,0, 0.2);
+        }
+        a{
+            padding-right: 0px;
+        }
+        .next{
+            background-color:#8b4513;
+            position: fixed;
+            top:50%;
+            left: 0%; 
+            transform: translateY(50%);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            border-radius:30px;
+            border: 1px solid #8b4513;
+            color: #fff;
+        }
+        .next:hover{
+            background-color: #5d2d0c;
+            border:1px solid #5d2d0c;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="title">
+        <div class="guide">
+            <a href="{{ url_for('root') }}" class="return">← 返回</a>
+            <h1>喂养须知</h1>
+        </div>
+        <div class="con">
+            <div class="con1">
+                <h2>春季（3-5月）</h2>
+                <h3>尿闭危机</h3>
+                <p>高发原因：温差大。水分摄入不足。</p>
+                <p>症状：频紧进出猫砂盆，尿团变小带血、舔生殖器。</p>
+                <h3>护理指南：</h3>
+                <p>-每日用流动饮水机增加饮水量，罐头兑温水骗水。</p>
+                <p>-喂然尿护理粮。</p>
+                <h3>生虫暴增</h3>
+                <p>-高发原因：跳蚤/螺虫卵随气温回升孵化。</p>
+                <p>症状：抓挠皮肤，粪便有自色米拉（绦虫）、呕吐活虫。</p>
+                <h3>护理指南：</h3>
+                <p>-每月1次体外驱虫，3月1次内驱。</p>
+                <p>-清结沙发缝隙，喷酒环境驱虫剂。</p>
+            </div>
+            <div class="con2">
+                <h2>夏季（6-8月）</h2>
+                <h3>中暑猝死</h3>
+                <p>高发原因：室温32°C且通风不良。</p>
+                <p>症状：吐舌喘气。肉垫发烫、抽搐昏迷。</p>
+                <h3>护理指南：</h3>
+                <p>-开空调保持26-28°C，放置冰垫/铝盆供躺卧。</p>
+                <p>-外出避免暴晒，备水常饮用。</p>
+                <h3>真菌皮肤病</h3>
+                <p>高发原因：汗腺堵塞+雨季潮湿。</p>
+                <p>症状：园形脱毛、皮屑结痂。频繁抓挠。</p>
+                <h3>护理指南：</h3>
+                <p>-每月药浴，患处剃毛涂对应药物。</p>
+                <p>-补充维生素B群，窝需每周暴晒。</p>
+            </div>
+            <div class="con3">
+                <h2>秋季（9-11月）</h2>
+                <h3>病毒性感冒</h3>
+                <p>高发原因：昼夜温差大致免疫力下降。</p>
+                <p>症状：发烧（≥39.5°C）。鼻头干燥，流清鼻涕。</p>
+                <h3>护理指南：</h3>
+                <p>-喂食免疫膏，用暖风机保持室温稳定。</p>
+                <p>-确诊猫鼻支需遵医嘱服用药物。</p>
+                <h3>关节炎疼痛</h3>
+                <p>高发原因：冷空气刺激关节滑膜。</p>
+                <p>症状：走路跛行、抗拒摸后腿、跳跃高度降低。</p>
+                <h3>护理指南：</h3>
+                <p>-睡垫铺电热毯（调至40°C），补充关节生鲨鱼软骨素。</p>
+                <p>-避免爬楼梯，减少跳跃。</p>
+            </div>
+            <div class="con4">
+                <h2>冬季（9-11月）</h2>
+                <h3>低温尿闭复发</h3>
+                <p>高发原因：饮水量减少膀胱受冷痉挛。</p>
+                <p>症状：排尿姿势维持>5分钟、嚎叫、腹部胀硬。</p>
+                <h3>护理指南：</h3>
+                <p>-温水泡罐头至38°C，用针筒喂水> 200ml/天。</p>
+                <p>-备情绪舒缓剂，减少应激性尿闭。</p>
+                <h3>加湿器肺炎</h3>
+                <p>高发原因：消毒不净的加湿器滋生军团菌。</p>
+                <p>症状：湿咳、呼顿急促，食欲废绝。</p>
+                <h3>护理指南：</h3>
+                <p>-加湿器每日换水+每周猜洗，湿度保持40%-60%。</p>
+                <p>-雾化化痰，拍背促进排痰。</p>
+            </div>
+        </div>
+    </div>
+    <a href="/领养指南" class="next"> &lt; </a>
+</body>
+</html>

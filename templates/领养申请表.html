@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>领养申请表</title>
+  <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial,sans-serif
+    }
+    .container{
+        width:90%;
+        max-width:600px;
+        margin:120px auto
+    }
+    .form-card{
+        border:1px solid #eee;
+        border-radius:12px;
+        padding:30px;
+        background:#fff
+    }
+    h2{
+        color:#8b4513;
+        text-align:center;
+        margin-bottom:25px
+    }
+    .form-group{
+        margin-bottom:18px
+    }
+    .form-group label{
+        display:block;
+        margin-bottom:6px;
+        font-weight:bold
+    }
+    .form-group input,.form-group textarea{
+        width:100%;
+        padding:10px;
+        border:1px solid #ddd;
+        border-radius:6px;
+        font-size:1rem
+    }
+    .submit-btn{
+        width:100%;
+        padding:12px;
+        background:#8b4513;
+        color:white;
+        border:none;
+        border-radius:6px;
+        font-size:1rem;
+        cursor:pointer
+    }
+    .back-btn{
+            display: inline-block;
+            padding: 8px 16px;
+            background: #8b4513;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+    }
+
+/* 弹窗初始隐藏 */
+    .success-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      display: none;          /* 默认隐藏 */
+      align-items: center;
+      justify-content: center;
+    }
+    .success-modal.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .success-content {
+      background: white;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .close-success {
+      padding: 8px 20px;
+      margin-top: 15px;
+      background: #8b4513;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header style="position:fixed;top:0;width:100%;background:#8b4513;color:white;padding:15px;text-align:center;z-index:999">
+流浪动物救助站
+</header>
+
+<div class="container">
+  <a href="/待领养" class="back-btn">← 返回</a>
+  <div class="form-card">
+    <h2>领养申请表</h2>
+
+    <form id="adoptForm" method="post">
+      <div class="form-group">
+        <label>领养动物</label>
+      {% if animal %}
+        <input type="text" id="petName" value="{{ animal.name }}" readonly>
+      </div>
+      {% endif %}
+  {% if users %}
+          <div class="form-group">
+            <label>姓名</label>
+            <input type="text" value="{{ users.real_name }}" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>联系电话</label>
+            <input type="text" value="{{ users.phone }}" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>居住地址</label>
+            <input type="text" value="{{ users.address }}" readonly>
+          </div>
+  {% endif %}
+          <div class="form-group">
+            <label>职业</label>
+            <input type="text" name="occupation" placeholder="请输入职业" required>
+          </div>
+          <div class="form-group">
+            <label>饲养经验</label>
+            <input type="text" name="experience" placeholder="有 / 无" required>
+          </div>
+      <div class="form-group">
+        <label>领养承诺</label>
+        <textarea rows="3" name="commitment" placeholder="请写下您的照顾承诺" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">提交申请</button>
+    </form>
+  </div>
+</div>
+
+<!-- 提交成功 -->
+<div class="success-modal" id="successModal" style="display:none;">
+  <div class="success-content">
+    <h3>提交成功！</h3>
+    <p>我们已收到您的领养申请<br>工作人员会尽快与您联系</p>
+    <button class="close-success" onclick="closeSuccess()">确定</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const adoptForm = document.getElementById('adoptForm');
+  const successModal = document.getElementById('successModal');
+
+  adoptForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = adoptForm.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '提交中...';
+
+    try {
+      // 使用当前页面 URL（自动包含 animal_id 参数）
+      const response = await fetch(window.location.href, {
+        method: 'POST',
+        body: new FormData(adoptForm)
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        // 显示成功弹窗
+        successModal.style.display = 'flex';
+      } else {
+        // 显示后端返回的错误信息
+        alert(result.msg || '提交失败，请重试');
+      }
+    } catch (error) {
+      console.error('提交错误:', error);
+      alert('网络错误，请检查连接后重试');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '提交领养申请';
+    }
+  });
+});
+
+function closeSuccess() {
+  const modal = document.getElementById('successModal');
+  modal.style.display = 'none';
+  // 可选：提交成功后跳转到待领养页面，刷新列表
+  window.location.href = '/待领养';
+}
+
+</script>
+</body>
+</html>

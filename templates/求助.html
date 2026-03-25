@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求助表单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f5f2;
+            padding: 40px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .return {
+            position: fixed;
+            top: 70px;
+            left: 30px;
+            background-color: #8b4513;
+            text-decoration: none;
+            border: 1px solid #8b4513;
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 6px;
+            z-index: 998;
+        }
+
+        .return:hover {
+            background-color: #5d2d0c;
+            border: 1px solid #5d2d0c;
+        }
+
+        h2 {
+            color: #8b4513;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        #animalinfo {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input[type="file"] {
+            width: auto !important;
+            height: 42px;
+            border: none;
+            background: transparent;
+        }
+        input[type="file"]::file-selector-button {
+            height: 42px;
+            padding: 0 20px;
+            background: #8b4513;
+            color: #fff;
+            border: 1px solid #8b4513;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background: #5d2d0c;
+            border-color: #5d2d0c;
+        }
+
+        .input1 {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 120px;
+            height: 44px;
+            background: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 8px;
+        }
+
+        button:hover {
+            background: #5d2d0c;
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+        }
+        .success-content {
+            background: white;
+            width: 300px;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .success-content h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        .success-content p {
+            margin-bottom: 20px;
+        }
+        .close-success {
+            padding: 8px 20px;
+            background: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{{ url_for('root') }}" class="return">← 返回</a>
+
+    <h2>流浪动物资料</h2>
+
+    <form id="animal_info" enctype="multipart/form-data" method="post">
+        <label>动物照片:</label>
+        <input type="file" accept="image/*" name="image_url">
+
+        <label for="animal_type">种类:</label>
+        <input type="text" name="animal_type" id="animal_type" required>
+
+        <label for="name">姓名:</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="age">年龄：</label>
+        <input type="text" name="age" id="age" required>
+
+        <div class="input1">
+            <label>性别:</label>
+            <input type="radio" name="sex" value="公">公
+            <input type="radio" name="sex" value="母">母
+            <input type="radio" name="sex" value="未知">未知
+        </div>
+
+        <label for="health">身体情况:</label>
+        <input type="text" name="health" id="health" required>
+
+        <label for="description">性格:</label>
+        <input type="text" name="description" id="description" required>
+
+        <label for="location">发现地址:</label>
+        <input type="text" name="location" id="location" required>
+
+        <label for="phone">求助人电话:</label>
+        <input type="text" name="phone" id="phone" required>
+
+        <div class="btn-group">
+            <button type="submit" class="submit-btn">确定</button>
+            <a href="/求助"><button type="button">取消</button></a>
+        </div>
+    </form>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <h3>资料已上传</h3>
+            <p>我们已收到您的求助信息<br>工作人员会尽快处理</p>
+            <button class="close-success" onclick="closeSuccess()">确定</button>
+        </div>
+    </div>
+
+</body>
+</html>

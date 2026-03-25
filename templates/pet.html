@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>流浪动物救助</title>
+ <style>
+ /* 全局样式 */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    }
+ 
+    body {
+    background-color: white;
+    color: #333;
+    line-height: 1.6;
+    padding-top: 80px; /* 为固定导航栏预留高度 */
+    }
+    a {
+    text-decoration: none;
+    color: #8b4513;
+    transition: color 0.3s;
+    }
+    
+    a:hover {
+    color: #5d2d0c;
+    }
+    .container {
+    max-width:1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    }
+    /* 导航栏 */
+    header {
+    background-color: white;
+    box-shadow: 0 2px 10px gainsboro;
+    position: fixed;
+    width: 100%;
+    top: 0; 
+    z-index: 1000;
+    padding: 10px 0;
+    }
+ 
+    nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    }
+    
+    .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+    }
+    
+    .nav-links {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    }
+    
+    .nav-links li {
+    margin:0px 15px;
+    }
+    .nav-links a {
+    font-weight: 500;
+    position: relative;
+    }
+    
+    .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #8b4513;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s;
+    }
+    
+    .nav-links a:hover::after {
+    width: 100%;
+    }
+
+    /* 横幅样式 */
+    .banner-slider {
+    height: calc(100vh - 80px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
+    url("{{ url_for('static', filename='/主页背景.png') }}") center/cover no-repeat;
+    }
+
+    .banner-slider h1 {
+    margin: 15px 0;
+    font-size: 2.2rem;
+    }
+
+    /* --- 核心快捷入口样式 --- */
+    .quick-entry {
+    padding: 60px 0;
+    background: #f8f5f2;
+    }
+    .entry-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    }
+    .entry-card {
+    width: 200px;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+    }
+    .entry-card:hover {
+    transform: translateY(-5px);
+    }
+    .entry-card h3 {
+    color: #8b4513;
+    margin-bottom: 10px;
+    }
+    .entry-card p {
+    font-size: 0.9rem;
+    color: #666;
+    }
+    .entry-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: #8b4513;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    }
+    .entry-btn:hover {
+    background: #5d2d0c;
+    color:white;
+    }
+    
+    /* 内容区块 */
+    .section {
+    padding: 80px 0;
+    }
+    
+    .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    color: #8b4513;
+    font-size: 2.5rem;
+    position: relative;
+    }
+    
+    .section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #8b4513;
+    margin: 15px auto;
+    }
+ 
+    /* 页脚 */
+    footer {
+    background-color: #8b4513;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    }
+    
+    .footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    }
+    
+    .footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    }
+    
+    .footer-section h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    }
+    
+    .footer-section a {
+    color: #f0e6d9;
+    display: block;
+    margin-bottom: 10px;
+    }
+    
+    .copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
+    }
+    .footer-section p{
+    width: 100%;
+    text-align: center;
+    margin:0px auto
+    }
+    .deng{
+    display:flex;
+    }
+ </style>
+</head>
+<body>
+ <!-- 导航栏 -->
+ <header>
+    <div class="container">
+    <nav>
+    <div><img src="{{ url_for('static', filename='/图标.jpg') }}" alt="救助站Logo" style="height: 40px;"></div>
+    <div class="logo">流浪动物救助站</div>
+    <ul class="nav-links">
+    <li><a href="#home">首页</a></li>
+    <li><a href="/领养指南" target="guide">领养指南</a></li>
+    <li><a href="/待领养" target="adopt">待领养动物</a></li>
+    <li><a href="/求助" target="help">我要求助</a></li>
+    </ul>
+    <div class="deng"><a href="/login" target="_blank">用户登录</a></div>
+    </nav>
+    </div>
+ </header>
+
+ <section class="banner-slider" id="home">
+    <h1>以领养，代替购买</h1>
+    <h1>给它一次家，温暖它一生</h1>
+    <h1>一只流浪动物，等待一个不抛弃的承诺</h1>
+    <h1>生命不分贵贱，每一只都值得被爱</h1>
+ </section>
+
+  <section class="quick-entry">
+    <div class="container">
+      <h2 class="section-title">爱心行动</h2>
+      <div class="entry-grid">
+        <div class="entry-card">
+          <h3>我要领养</h3>
+          <p>给流浪的它一个温暖的家</p>
+          <a href="/待领养" class="entry-btn">立即查看</a>
+        </div>
+        <div class="entry-card">
+          <h3>我要救助</h3>
+          <p>发现流浪动物，伸出援手</p>
+          <a href="/求助" class="entry-btn">我要上报</a>
+        </div>
+</div>
+    </div>
+  </section>
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+    <div class="footer-content">
+    <div class="footer-section">
+    <h3>关于我们</h3>
+    <p>流浪动物救助站是民间流浪动物公益救助团队，专注流浪动物救助、领养、科普宣传</p>
+    </div>
+    <div class="footer-section">
+    <h3>快速链接</h3>
+    <a href="#home">首页</a>
+    <a href="/领养指南" target="guide">领养指南</a>
+    <a href="/待领养" target="adopt">待领养动物</a>
+    <a href="/求助" target="help">我要求助</a>
+    </div>
+    
+    <div class="footer-section">
+    <h3>联系我们</h3>
+    <p>邮箱：info@liulangjiuzhu.com</p>
+    <p>电话：0836-1234567</p>
+    </div>
+    </div>
+    <div class="copyright">
+    <p>&copy; 2026 流浪动物救助站 公益平台</p>
+    </div>
+    </div>
+  </footer>
+ </body>
+ </html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>救助指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 100px; 
+            padding-bottom: 50px;
+        }
+
+        /* 顶部固定栏 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #8b4513;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .section-title {
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .guide-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .guide-card h2 {
+            color: #8b4513;
+            font-size: 1.3rem;
+            margin: 25px 0 12px 0;
+        }
+
+        .guide-card p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .return {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #8b4513;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .return:hover {
+            opacity: 0.9;
+        }
+
+        /* 下一页按钮 */
+        .next {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #8b4513;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 100;
+        }
+        .next:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部栏 -->
+    <header></header>
+
+    <div class="container">
+        <a href="{{ url_for('root') }}" class="return">← 返回</a>
+        <h1 class="section-title">救助须知!</h1>
+
+        <div class="guide-card">
+            <h2>一、 领养人基础条件</h2>
+            <p>1. 稳定住所： 领养人在本地有稳定、固定的住所。</p>
+            <p>2. 经济独立： 有稳定的经济来源。</p>
+            <p>3. 全家同意： 需征得所有同住的家庭成员（或伴侣）的同意。</p>
+            <p>4. 成年身份： 领养人需年满23周岁，未成年人需由监护人领养。</p>
+
+            <h2>二、 物质与安全环境</h2>
+            <p>1. 封窗（硬性要求）： 家中所有窗户必须安装牢固防护网。</p>
+            <p>2. 科学喂养： 喂食优质猫粮/狗粮，拒绝喂食人类残羹剩饭。</p>
+            <p>3. 生活设施： 准备基础的宠物生活用品（猫砂盆、食盆、玩具等）。</p>
+
+            <h2>三、 医疗与健康管理</h2>
+            <p>1. 适龄绝育： 领养后须在适龄阶段带宠物完成绝育手术。</p>
+            <p>2. 疫苗驱虫： 按时接种疫苗，定期进行体内外驱虫。</p>
+            <p>3. 有病就医： 一旦生病，及时送往正规宠物医院治疗。</p>
+
+            <h2>四、 禁止事项</h2>
+            <p>❌ 禁止散养、长期笼养。</p>
+            <p>❌ 禁止佩戴危险项圈。</p>
+            <p>❌ 禁止喂食有毒食物（巧克力、洋葱、百合等）。</p>
+        </div>
+    </div>
+
+    <a href="/喂养指南" class="next">&gt;</a>
+</body>
+</html>
