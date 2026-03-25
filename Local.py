@@ -18,7 +18,7 @@ app.secret_key='12dedwf4f'
 # 上传目录：和 api 同级，新建 uploads 文件夹
 UPLOAD_FOLDER = r"C:\Users\sunyu\Desktop\流浪动物救助网站\uploads"
 if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+    # os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
