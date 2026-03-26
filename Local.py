@@ -7,7 +7,7 @@ import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
-
+from pymysql.err import OperationalError
 
 # 让 pymysql 伪装成 MySQLdb，兼容旧代码
 pymysql.install_as_MySQLdb()
@@ -16,9 +16,7 @@ app = Flask(__name__)
 app.secret_key='12dedwf4f'
 
 # 上传目录：和 api 同级，新建 uploads 文件夹
-import tempfile
-import os
-UPLOAD_FOLDER = tempfile.gettempdir()  # 自动获取系统临时目录
+UPLOAD_FOLDER = r"C:\Users\sunyu\Desktop\流浪动物救助网站\uploads"
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -36,17 +34,22 @@ import pymysql
 from pymysql.cursors import DictCursor
 
 def get_db1_connection():
+    try:
+        conn = pymysql.connect(
+            host=os.environ.get('DB_HOST', 'localhost'),
+            user=os.environ.get('DB_USER', 'root'),
+            password=os.environ.get('DB_PASSWORD', '123456'),
+            database=os.environ.get('DB_NAME', 'user_system'),
+            charset='utf8mb4',
+            port=int(os.environ.get('DB_PORT', 3307)),  # 端口需要转为整数
+            cursorclass=DictCursor,  # 以字典形式返回游标对象
+            connect_timeout=30
+        )
     # 从环境变量读取数据库配置（Vercel 部署时设置）
-    conn = pymysql.connect(
-        host=os.environ.get('DB_HOST', 'localhost'),
-        user=os.environ.get('DB_USER', 'root'),
-        password=os.environ.get('DB_PASSWORD', '123456'),
-        database=os.environ.get('DB_NAME', 'user_system'),
-        charset='utf8mb4',
-        port=int(os.environ.get('DB_PORT', 3307)),  # 端口需要转为整数
-        cursorclass=DictCursor  # 以字典形式返回游标对象
-    )
-    return conn
+        return conn
+    except OperationalError as e:
+            print(f"数据库连接失败: {e}")
+            raise
 
 #数据库2连接配置
 def get_db2_connection():
@@ -58,7 +61,8 @@ def get_db2_connection():
         database=os.environ.get('DB2_NAME', 'animal_system'),
         charset='utf8mb4',
         port=int(os.environ.get('DB2_PORT', 3307)),
-        cursorclass=DictCursor  # 以字典形式返回数据
+        cursorclass=DictCursor,  # 以字典形式返回数据
+        connect_timeout = 30
     )
     return conn
 
